@@ -8,6 +8,7 @@ const LOCAL_STORAGE_KEY = 'qr-menu-generator-data';
 export default function App() {
   const [viewMode, setViewMode] = useState('merchant'); // 'merchant' | 'customer'
   const [customerMenuData, setCustomerMenuData] = useState(null);
+  const [isMerchantPreview, setIsMerchantPreview] = useState(false);
   const [merchantMenuData, setMerchantMenuData] = useState(() => {
     // Load from localStorage or fall back to default menu
     try {
@@ -24,11 +25,13 @@ export default function App() {
     const handleUrlRouting = () => {
       const params = new URLSearchParams(window.location.search);
       const menuParam = params.get('menu');
+      const isPreview = params.get('preview') === 'true';
       
       if (menuParam) {
         const decoded = decodeMenu(menuParam);
         if (decoded) {
           setCustomerMenuData(decoded);
+          setIsMerchantPreview(isPreview);
           setViewMode('customer');
           return;
         }
@@ -63,7 +66,7 @@ export default function App() {
     return (
       <CustomerMenu 
         menuData={customerMenuData} 
-        onBackToDashboard={handleBackToDashboard}
+        onBackToDashboard={isMerchantPreview ? handleBackToDashboard : null}
       />
     );
   }

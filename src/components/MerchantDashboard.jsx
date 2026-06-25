@@ -29,6 +29,8 @@ export default function MerchantDashboard({ initialMenu, onSave }) {
     return encoded ? `${origin}?menu=${encoded}` : origin;
   })();
 
+  const previewUrl = customerUrl ? `${customerUrl}&preview=true` : '';
+
   useEffect(() => {
     if (customerUrl) {
       QRCode.toDataURL(customerUrl, { width: 300, margin: 2, errorCorrectionLevel: 'L' }, (err, url) => {
@@ -177,7 +179,7 @@ export default function MerchantDashboard({ initialMenu, onSave }) {
             ))}
           </div>
           <a 
-            href={customerUrl} 
+            href={previewUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="btn btn-secondary btn-sm"
