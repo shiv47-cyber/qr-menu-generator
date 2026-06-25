@@ -146,7 +146,7 @@ export default function CustomerMenu({ menuData, onBackToDashboard }) {
                           </span>
                         </div>
                         <p className="item-desc">{item.description}</p>
-                        <div className="item-price">${parseFloat(item.price).toFixed(2)}</div>
+                        <div className="item-price">₹{parseFloat(item.price).toFixed(2)}</div>
                       </div>
                     </div>
                   ))}
@@ -201,7 +201,7 @@ export default function CustomerMenu({ menuData, onBackToDashboard }) {
                 <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{selectedItem.name}</h2>
                 
                 <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary)' }}>
-                  ${parseFloat(selectedItem.price).toFixed(2)}
+                  ₹{parseFloat(selectedItem.price).toFixed(2)}
                 </div>
                 
                 <hr style={{ border: 'none', borderBottom: '1px solid var(--border-color)', margin: '8px 0' }} />

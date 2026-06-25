@@ -279,7 +279,7 @@ export default function MerchantDashboard({ initialMenu, onSave }) {
                                   {item.isVeg ? 'Veg' : 'Non-Veg'}
                                 </span>
                               </span>
-                              <span className="merchant-item-price">${parseFloat(item.price).toFixed(2)}</span>
+                              <span className="merchant-item-price">₹{parseFloat(item.price).toFixed(2)}</span>
                             </div>
                             
                             <div className="flex gap-2">
@@ -418,7 +418,7 @@ export default function MerchantDashboard({ initialMenu, onSave }) {
 
               <div className="form-row-2">
                 <div className="form-group">
-                  <label className="form-label" htmlFor="item-price-input">Price ($)</label>
+                  <label className="form-label" htmlFor="item-price-input">Price (₹)</label>
                   <input 
                     id="item-price-input"
                     type="number" 
@@ -427,7 +427,7 @@ export default function MerchantDashboard({ initialMenu, onSave }) {
                     className="form-input" 
                     value={itemForm.price} 
                     onChange={(e) => setItemForm(prev => ({ ...prev, price: e.target.value }))}
-                    placeholder="8.50"
+                    placeholder="150"
                     required
                   />
                 </div>

@@ -13,21 +13,21 @@ export const DEFAULT_MENU = {
           id: "item-1",
           name: "Truffle Parmesan Fries",
           description: "Crispy hand-cut golden fries tossed in white truffle oil, aged parmesan, and fresh rosemary.",
-          price: "8.50",
+          price: "180.00",
           isVeg: true
         },
         {
           id: "item-2",
           name: "Stuffed Cremini Mushrooms",
           description: "Cremini mushrooms filled with garlic-herb cream cheese, spinach, and toasted panko crumbs.",
-          price: "10.00",
+          price: "240.00",
           isVeg: true
         },
         {
           id: "item-3",
           name: "Glazed Pork Belly Bites",
           description: "Slow-roasted pork belly cubes glazed in a sweet soy-ginger reduction, topped with green onions.",
-          price: "12.50",
+          price: "320.00",
           isVeg: false
         }
       ]
@@ -40,21 +40,21 @@ export const DEFAULT_MENU = {
           id: "item-4",
           name: "Artisanal Pesto Penne",
           description: "Penne pasta tossed in fresh basil pesto, blistered cherry tomatoes, pine nuts, and shaved parmesan.",
-          price: "16.50",
+          price: "380.00",
           isVeg: true
         },
         {
           id: "item-5",
           name: "Pan-Seared Atlantic Salmon",
           description: "Crispy-skin salmon fillet served over grilled asparagus, roasted fingerling potatoes, and lemon butter sauce.",
-          price: "24.00",
+          price: "650.00",
           isVeg: false
         },
         {
           id: "item-6",
           name: "The Garden House Burger",
           description: "Prime beef patty, melted cheddar, caramelized onions, butter lettuce, and house sauce on a toasted brioche bun.",
-          price: "18.00",
+          price: "290.00",
           isVeg: false
         }
       ]
@@ -67,21 +67,21 @@ export const DEFAULT_MENU = {
           id: "item-7",
           name: "Warm Chocolate Lava Cake",
           description: "Decadent chocolate cake with a molten center, served with vanilla bean gelato.",
-          price: "9.00",
+          price: "190.00",
           isVeg: true
         },
         {
           id: "item-8",
           name: "Mint Lime Fizz",
           description: "Fresh muddled mint and lime juice topped with cold-pressed sugarcane syrup and sparkling water.",
-          price: "5.50",
+          price: "120.00",
           isVeg: true
         },
         {
           id: "item-9",
           name: "Hibiscus Iced Brew",
           description: "Cold-brewed organic hibiscus tea infused with orange peel and cinnamon syrup.",
-          price: "5.00",
+          price: "110.00",
           isVeg: true
         }
       ]
