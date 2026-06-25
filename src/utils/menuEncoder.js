@@ -159,8 +159,15 @@ export function decodeMenu(encodedStr) {
     }
     const utf8Str = atob(base64);
     const jsonStr = decodeURIComponent(escape(utf8Str));
-    const compressed = JSON.parse(jsonStr);
-    return decompressMenu(compressed);
+    const data = JSON.parse(jsonStr);
+    
+    // Auto-detect format: if it contains 'n' or 's', it's compressed.
+    // Otherwise, treat it as the older uncompressed format.
+    if (data && (data.n !== undefined || data.s !== undefined)) {
+      return decompressMenu(data);
+    } else {
+      return data;
+    }
   } catch (err) {
     console.error("Error decoding menu data:", err);
     return null;
