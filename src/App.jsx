@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MerchantDashboard from './components/MerchantDashboard';
 import CustomerMenu from './components/CustomerMenu';
+import AdminGate from './components/AdminGate';
 import { DEFAULT_MENU, decodeMenu } from './utils/menuEncoder';
 
 const LOCAL_STORAGE_KEY = 'qr-menu-generator-data';
@@ -18,6 +19,14 @@ export default function App() {
       console.error("Error reading localStorage:", e);
       return DEFAULT_MENU;
     }
+  });
+
+  // Admin PIN configuration states
+  const [adminPin, setAdminPin] = useState(() => {
+    return localStorage.getItem('qr-menu-admin-pin') || null;
+  });
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('qr-menu-admin-authenticated') === 'true';
   });
 
   // Handle URL parsing on mount and on popstate (browser back/forward navigation)
@@ -62,6 +71,19 @@ export default function App() {
     setViewMode('merchant');
   };
 
+  const handleSetupPin = (newPin) => {
+    localStorage.setItem('qr-menu-admin-pin', newPin);
+    setAdminPin(newPin);
+    sessionStorage.setItem('qr-menu-admin-authenticated', 'true');
+    setIsAuthenticated(true);
+  };
+
+  const handleVerifySuccess = () => {
+    sessionStorage.setItem('qr-menu-admin-authenticated', 'true');
+    setIsAuthenticated(true);
+  };
+
+  // 1. Render Customer View if menu is in URL
   if (viewMode === 'customer' && customerMenuData) {
     return (
       <CustomerMenu 
@@ -71,6 +93,18 @@ export default function App() {
     );
   }
 
+  // 2. Render Passcode Gate / Landing Page if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <AdminGate 
+        savedPin={adminPin}
+        onSetupPin={handleSetupPin}
+        onVerifySuccess={handleVerifySuccess}
+      />
+    );
+  }
+
+  // 3. Render Merchant Dashboard if authenticated
   return (
     <MerchantDashboard 
       initialMenu={merchantMenuData} 
