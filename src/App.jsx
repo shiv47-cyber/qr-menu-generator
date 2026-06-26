@@ -21,10 +21,7 @@ export default function App() {
     }
   });
 
-  // Admin PIN configuration states
-  const [adminPin, setAdminPin] = useState(() => {
-    return localStorage.getItem('qr-menu-admin-pin') || null;
-  });
+  // Admin session authentication state
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return sessionStorage.getItem('qr-menu-admin-authenticated') === 'true';
   });
@@ -71,13 +68,6 @@ export default function App() {
     setViewMode('merchant');
   };
 
-  const handleSetupPin = (newPin) => {
-    localStorage.setItem('qr-menu-admin-pin', newPin);
-    setAdminPin(newPin);
-    sessionStorage.setItem('qr-menu-admin-authenticated', 'true');
-    setIsAuthenticated(true);
-  };
-
   const handleVerifySuccess = () => {
     sessionStorage.setItem('qr-menu-admin-authenticated', 'true');
     setIsAuthenticated(true);
@@ -97,8 +87,6 @@ export default function App() {
   if (!isAuthenticated) {
     return (
       <AdminGate 
-        savedPin={adminPin}
-        onSetupPin={handleSetupPin}
         onVerifySuccess={handleVerifySuccess}
       />
     );

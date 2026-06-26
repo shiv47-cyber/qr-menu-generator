@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-export default function AdminGate({ savedPin, onSetupPin, onVerifySuccess }) {
-  const [mode, setMode] = useState(savedPin ? 'landing' : 'setup-create'); // 'landing' | 'setup-create' | 'setup-confirm' | 'login'
+const ADMIN_PIN = "2092";
+
+export default function AdminGate({ onVerifySuccess }) {
+  const [mode, setMode] = useState('landing'); // 'landing' | 'login'
   const [pinBuffer, setPinBuffer] = useState('');
-  const [tempPin, setTempPin] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleKeyPress = (num) => {
@@ -14,7 +15,6 @@ export default function AdminGate({ savedPin, onSetupPin, onVerifySuccess }) {
 
     // If we reached 4 digits, process it
     if (newBuffer.length === 4) {
-      // Small timeout so the user sees the last dot light up before transition
       setTimeout(() => {
         processPin(newBuffer);
       }, 200);
@@ -27,28 +27,11 @@ export default function AdminGate({ savedPin, onSetupPin, onVerifySuccess }) {
   };
 
   const processPin = (enteredPin) => {
-    if (mode === 'setup-create') {
-      setTempPin(enteredPin);
+    if (enteredPin === ADMIN_PIN) {
+      onVerifySuccess();
+    } else {
+      setErrorMsg("Incorrect passcode. Try again.");
       setPinBuffer('');
-      setMode('setup-confirm');
-    } 
-    else if (mode === 'setup-confirm') {
-      if (enteredPin === tempPin) {
-        onSetupPin(enteredPin);
-      } else {
-        setErrorMsg("PINs do not match. Start over.");
-        setPinBuffer('');
-        setTempPin('');
-        setMode('setup-create');
-      }
-    } 
-    else if (mode === 'login') {
-      if (enteredPin === savedPin) {
-        onVerifySuccess();
-      } else {
-        setErrorMsg("Incorrect passcode. Try again.");
-        setPinBuffer('');
-      }
     }
   };
 
@@ -87,11 +70,7 @@ export default function AdminGate({ savedPin, onSetupPin, onVerifySuccess }) {
           onClick={() => {
             setPinBuffer('');
             setErrorMsg('');
-            if (mode === 'login') setMode('landing');
-            else if (mode === 'setup-confirm') {
-              setMode('setup-create');
-              setTempPin('');
-            }
+            setMode('landing');
           }}
         >
           Cancel
@@ -174,24 +153,18 @@ export default function AdminGate({ savedPin, onSetupPin, onVerifySuccess }) {
     );
   }
 
-  // 2. PASSCODE ENTRY SCREEN (Setup or Login)
+  // 2. PASSCODE ENTRY SCREEN (Login Only)
   return (
     <div className="gate-wrapper">
       <div className="gate-card">
         <div className="gate-icon">
-          {mode === 'login' ? '🔒' : '🔑'}
+          🔒
         </div>
 
         <div>
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>
-            {mode === 'setup-create' && 'Create Admin Passcode'}
-            {mode === 'setup-confirm' && 'Confirm Admin Passcode'}
-            {mode === 'login' && 'Admin Login'}
-          </h2>
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>Admin Login</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            {mode === 'setup-create' && 'Set a 4-digit PIN to secure your editing dashboard.'}
-            {mode === 'setup-confirm' && 'Please re-enter your 4-digit PIN to confirm.'}
-            {mode === 'login' && 'Enter your 4-digit PIN to access the editing dashboard.'}
+            Enter the 4-digit PIN to access the editing dashboard.
           </p>
         </div>
 
