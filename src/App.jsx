@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MerchantDashboard from './components/MerchantDashboard';
 import CustomerMenu from './components/CustomerMenu';
 import AdminGate from './components/AdminGate';
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { DEFAULT_MENU, decodeMenu } from './utils/menuEncoder';
 
 const LOCAL_STORAGE_KEY = 'qr-menu-generator-data';
@@ -76,27 +77,36 @@ export default function App() {
   // 1. Render Customer View if menu is in URL
   if (viewMode === 'customer' && customerMenuData) {
     return (
-      <CustomerMenu 
-        menuData={customerMenuData} 
-        onBackToDashboard={isMerchantPreview ? handleBackToDashboard : null}
-      />
+      <>
+        <CustomerMenu 
+          menuData={customerMenuData} 
+          onBackToDashboard={isMerchantPreview ? handleBackToDashboard : null}
+        />
+        <SpeedInsights />
+      </>
     );
   }
 
   // 2. Render Passcode Gate / Landing Page if not authenticated
   if (!isAuthenticated) {
     return (
-      <AdminGate 
-        onVerifySuccess={handleVerifySuccess}
-      />
+      <>
+        <AdminGate 
+          onVerifySuccess={handleVerifySuccess}
+        />
+        <SpeedInsights />
+      </>
     );
   }
 
   // 3. Render Merchant Dashboard if authenticated
   return (
-    <MerchantDashboard 
-      initialMenu={merchantMenuData} 
-      onSave={handleSaveMenu}
-    />
+    <>
+      <MerchantDashboard 
+        initialMenu={merchantMenuData} 
+        onSave={handleSaveMenu}
+      />
+      <SpeedInsights />
+    </>
   );
 }
